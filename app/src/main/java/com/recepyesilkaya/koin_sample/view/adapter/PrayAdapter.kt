@@ -9,11 +9,8 @@ import com.recepyesilkaya.koin_sample.R
 import com.recepyesilkaya.koin_sample.data.model.Pray
 import kotlinx.android.synthetic.main.item_pray.view.*
 
-interface SelectPrayCallback {
-    fun onItemClick(pray: Pray)
-}
 
-class PrayAdapter(private val selectPrayCallback: SelectPrayCallback) :
+class PrayAdapter(private val onItemClick: (Pray) -> Unit) :
     RecyclerView.Adapter<PrayAdapter.PrayViewHolder>() {
 
     private var prayList = ArrayList<Pray>()
@@ -32,7 +29,9 @@ class PrayAdapter(private val selectPrayCallback: SelectPrayCallback) :
         holder.itemView.cvPrayItem.animation =
             AnimationUtils.loadAnimation(holder.itemView.context, R.anim.anim)
 
-        holder.itemView.setOnClickListener { selectPrayCallback.onItemClick(position) }
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(position)
+        }
     }
 
     override fun getItemCount(): Int = prayList.size
