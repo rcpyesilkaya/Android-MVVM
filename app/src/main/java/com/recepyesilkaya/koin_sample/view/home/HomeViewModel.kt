@@ -1,11 +1,15 @@
 package com.recepyesilkaya.koin_sample.view.home
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.recepyesilkaya.koin_sample.data.model.Pray
 import com.recepyesilkaya.koin_sample.data.repository.PrayRepository
 import com.recepyesilkaya.koin_sample.util.Resource
 import com.recepyesilkaya.koin_sample.util.Status
+import kotlinx.coroutines.flow.onStart
 
 class HomeViewModel(
     private val prayRepository: PrayRepository,
@@ -16,8 +20,11 @@ class HomeViewModel(
     private val apiService = RetrofitClient.getRetrofit().create(APIService::class.java)
     private val prayRepository = PrayRepository(apiService,prayDao)*/
 
+
     fun getPrayData(id: String, statusDataLocal: Boolean): LiveData<Resource<List<Pray>>> =
-        prayRepository.getPrayData(id, statusDataLocal).asLiveData(viewModelScope.coroutineContext)
+        prayRepository.getPrayData(id, statusDataLocal)
+            .onStart { emit(Resource.loading(data = null)) }
+            .asLiveData()
 
     private var _loadingValue = MutableLiveData<Boolean>()
     val loadingValue: LiveData<Boolean>

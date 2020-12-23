@@ -42,22 +42,25 @@ class HomeFragment : Fragment() {
 
         rvPray.adapter = prayAdapter
 
-        observePrayLiveData(false)
+        observePrayLiveData()
+        observePrayFlow("9541", false)
 
         swipeRefresh.setOnRefreshListener {
             swipeRefresh.isRefreshing = false
             progressBar.visibility = View.VISIBLE
             textView.visibility = View.GONE
             rvPray.visibility = View.GONE
-            observePrayLiveData(false)
+            observePrayFlow("9541", false)
         }
     }
 
-    private fun observePrayLiveData(statusDataLocal: Boolean) {
-        homeViewModel.getPrayData("9541", statusDataLocal).observe(viewLifecycleOwner, Observer {
+    private fun observePrayFlow(id: String, statusDataLocal: Boolean) {
+        homeViewModel.getPrayData(id, statusDataLocal).observe(viewLifecycleOwner, Observer {
             homeViewModel.resourceStatusData(it)
         })
+    }
 
+    private fun observePrayLiveData() {
         homeViewModel.loadingValue.observe(viewLifecycleOwner, Observer {
             progressBar.isVisible = it
         })

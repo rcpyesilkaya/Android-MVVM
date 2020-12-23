@@ -6,8 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface APIService {
-
     @GET("vakitler/{id}")
     suspend fun getData(@Path("id") id: String): Response<List<Pray>>
-
 }
