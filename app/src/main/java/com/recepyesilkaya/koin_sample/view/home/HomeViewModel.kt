@@ -26,23 +26,23 @@ class HomeViewModel(
             .onStart { emit(Resource.loading(data = null)) }
             .asLiveData()
 
-    private var _loadingValue = MutableLiveData<Boolean>()
+    private val _loadingValue = MutableLiveData<Boolean>()
     val loadingValue: LiveData<Boolean>
         get() = _loadingValue
 
-    private var _successValue = MutableLiveData<Boolean>()
+    private val _successValue = MutableLiveData<Boolean>()
     val successValue: LiveData<Boolean>
         get() = _successValue
 
-    private var _errorValue = MutableLiveData<Boolean>()
+    private val _errorValue = MutableLiveData<Boolean>()
     val errorValue: LiveData<Boolean>
         get() = _errorValue
 
-    private var _prays = MutableLiveData<List<Pray>>()
+    private val _prays = MutableLiveData<List<Pray>>()
     val prays: LiveData<List<Pray>>
         get() = _prays
 
-    private var _error = MutableLiveData<String>()
+    private val _error = MutableLiveData<String>()
     val error: LiveData<String>
         get() = _error
 
